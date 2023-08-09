@@ -14,5 +14,7 @@ extern const char *actions_one_operand[];
 // Action types that require no operands:
 extern const char *actions_no_operands[];
 
+extern const char *actions_bit[];
+
 extern int ACTION_KEY;
 #endif // ACTIONS_H

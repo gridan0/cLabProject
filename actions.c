@@ -53,7 +53,7 @@ const char *actions_no_operands[] = {
         "stop"
 };
 
-//Bit translation of actions, coresponding to thier position(up to 15 in bits)
+//Bit translation of actions, corresponding to their position(up to 15 in bits)
 //This will be the opcode in the machine
 const char *actions_bit[] = {
         "0000",

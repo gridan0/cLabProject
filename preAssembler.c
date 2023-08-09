@@ -5,6 +5,7 @@
 #include <string.h>
 
 #define MAX_CHAR 80
+#define NUMBER_OF_ACTIONS 16
 
 int preAssembler() {
     FILE *postMacro;
@@ -38,7 +39,6 @@ int preAssembler() {
 
         char comparisonArray[4]; // Array to hold 3 characters plus the null terminator
         int comparisonArrayLen = 0;
-
         char compareChar;
 
         //Creating an array that will contain the action(mov, sub, add...)
@@ -51,27 +51,39 @@ int preAssembler() {
             }
         }
 
-        //test print to see if it works
-        printf("Compare array: %s\n", comparisonArray);
+        //Comparing the array that we have created to the action table, and seeing what fits
+        int count1;
+        for (count1 = 0; count1 < NUMBER_OF_ACTIONS; count1++) {
+            if (strcmp(comparisonArray, actions[count1]) == 0) {
+                //If the action from the .as file matches the action we detected
 
-        int i;
-        for (i = 0; i < 16; i++) {
-            if (strcmp(comparisonArray, actions[i]) == 0) {
-                printf("Found a match with action element %d: %s\n", i, actions[i]);
+                //We should get the bit value of comparisonArray
+                printf("The machine code for %s, is %s \n ", comparisonArray, actions_bit[count1]);
+
+                //Let's print the instruction word, only with the opcode, without the operands
+
+                char instruction_word[12]; //OUR INSTRUCTION WORD
+                // Initialize instruction_word with zeros
+                memset(instruction_word, '0', 12);
+
+                //Position of the opcode in the instruction word
+                int opcodePosition = 4;
+
+                int count2;
+                // Copy the values from comparisonArray into instruction_word at the desired position
+                for (count2 = 0; count2 < strlen(comparisonArray); count2++) {
+                    //Insert the array pos of comparisonArray with the value of actionBit
+                    instruction_word[opcodePosition + count2] = actions_bit[count1][count2];
+                }
+                // Print the result
+                printf("instruction_word: %s\n", instruction_word);
             }
         }
-
-        //Comparing the array that we have created to the action table, and seeing what fits
-
-
-
-
         linesCount++; // Increment the line count
     }
 
     // Closing the file
     fclose(postMacro);
-
     printf("\n Lines: %d \n", linesCount);
 
     return 0;
