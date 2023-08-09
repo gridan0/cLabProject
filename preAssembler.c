@@ -62,17 +62,19 @@ int preAssembler() {
 
                 //Let's print the instruction word, only with the opcode, without the operands
 
-                char instruction_word[12]; //OUR INSTRUCTION WORD
+                char instruction_word[13]; //OUR INSTRUCTION WORD
                 // Initialize instruction_word with zeros
-                memset(instruction_word, '0', 12);
+                memset(instruction_word, '0', sizeof(instruction_word) - 1); // -1 to leave space for null terminator
+
+                // Null-terminate the instruction_word string
+                instruction_word[12] = '\0';
 
                 //Position of the opcode in the instruction word
                 int opcodePosition = 4;
-
                 int count2;
                 // Copy the values from comparisonArray into instruction_word at the desired position
-                for (count2 = 0; count2 < strlen(comparisonArray); count2++) {
-                    //Insert the array pos of comparisonArray with the value of actionBit
+                for (count2 = 0; count2 < strlen(actions_bit[count1]); count2++) {
+                    // Insert the array pos of comparisonArray with the value of actionBit
                     instruction_word[opcodePosition + count2] = actions_bit[count1][count2];
                 }
                 // Print the result
