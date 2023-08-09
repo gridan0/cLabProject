@@ -1,0 +1,3 @@
+C:/Users/betsa/Desktop/AssemblerProject/cmake-build-debug/CMakeFiles/AssemblerProject.dir
+C:/Users/betsa/Desktop/AssemblerProject/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/betsa/Desktop/AssemblerProject/cmake-build-debug/CMakeFiles/rebuild_cache.dir
