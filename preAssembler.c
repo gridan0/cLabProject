@@ -1,6 +1,8 @@
 #include "preAssembler.h"
 #include "actions.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define MAX_CHAR 80
 
@@ -22,7 +24,48 @@ int preAssembler() {
 
     //Reading the file line by line
     while(fgets(line, MAX_CHAR, postMacro) != NULL) {
-        printf("%s", line); //Printing the .as file
+        //printf("%s", line); //Printing the .as file
+
+
+        /*
+         * WE WILL DO LABELS LATER
+         *
+         * Opcode is the first phrase that is detected each line.
+         * Therefore we will detect it first
+         */
+
+        //Detecting OPcode using a comparison array
+
+        char comparisonArray[4]; // Array to hold 3 characters plus the null terminator
+        int comparisonArrayLen = 0;
+
+        char compareChar;
+
+        //Creating an array that will contain the action(mov, sub, add...)
+        for(compareChar = 'a'; compareChar <= 'c'; compareChar++) {
+            if(comparisonArrayLen < 3) {
+                comparisonArray[comparisonArrayLen] = line[comparisonArrayLen]; // Add the character
+                comparisonArrayLen++;
+            } else {
+                break; // Stop if the array is full
+            }
+        }
+
+        //test print to see if it works
+        printf("Compare array: %s\n", comparisonArray);
+
+        int i;
+        for (i = 0; i < 16; i++) {
+            if (strcmp(comparisonArray, actions[i]) == 0) {
+                printf("Found a match with action element %d: %s\n", i, actions[i]);
+            }
+        }
+
+        //Comparing the array that we have created to the action table, and seeing what fits
+
+
+
+
         linesCount++; // Increment the line count
     }
 

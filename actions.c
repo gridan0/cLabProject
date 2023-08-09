@@ -1,40 +1,9 @@
 #include <stdio.h>
 
 //Here we will concentrate all of the actions and related operations with them
+//Including the binary translation
 
 #define ACTION_KEY 16 //number of actions
-
-//Action types:
-
-//Requires 2 operands:
-/*
- * mov 0
- * cmp 1
- * add 2
- * sub 3
- * lea 6
- */
-
-
-//Requires 1 operand:
-
-/*
- * not 4
- * clr 5
- * inc 7
- * dec 8
- * jmp 9
- * bne 10
- * red 11
- * prn 12
- * jsr 13
- */
-
-//Requires no operand:
-/*
- * rts 14
- * stop 15
- */
 
 //Array with all of the actions
 const char *actions[ACTION_KEY] = {
@@ -83,3 +52,25 @@ const char *actions_no_operands[] = {
         "rts",
         "stop"
 };
+
+//Bit translation of actions, coresponding to thier position(up to 15 in bits)
+//This will be the opcode in the machine
+const char *actions_bit[] = {
+        "0000",
+        "0001",
+        "0010",
+        "0011",
+        "0100",
+        "0101",
+        "0110",
+        "0111",
+        "1000",
+        "1001",
+        "1010",
+        "1011",
+        "1100",
+        "1101",
+        "1110",
+        "1111"
+};
+
