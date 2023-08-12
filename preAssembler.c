@@ -87,15 +87,9 @@ int preAssembler() {
                 /*
                  * MI'UN MIYADI
                  * We will detect the original operand sorting method
-                 * this function will be called after the pointer will reach the 5th position(should be adjusted later)
-                 * This code translates the number detected to binary
-                 * example: mov 1, @r2 => will output: 000000000100
+                 * this function will be called after the pointer will reach the 5th position
                  */
-                //printf("Origin operand number: %s\n", readNumbersInstruction(line));
-
-                //Prints binary version of a number given
-                print10BitBinary(originOperand);
-                free(originOperand);
+                printf("Origin operand number: %s\n", readNumbersInstruction(line));
 
                 // Print the result
                 printf("instruction_word: %s\n", instruction_word);
