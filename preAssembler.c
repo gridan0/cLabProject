@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "binaryUtil.h"
+#include "firstOperand.h"
 
 #define MAX_CHAR 80
 #define NUMBER_OF_ACTIONS 16
@@ -12,6 +14,12 @@ int preAssembler() {
     char processedAsProgram[] = "macroProcessed/testProgram1_processed.as";
     char line[MAX_CHAR];
     int linesCount = 0;
+    char* originOperand = readNumbersInstruction(line);
+
+    /*
+     * Legal operands, two stages
+     */
+
 
     //Reading the post macro processing file
     postMacro = fopen(processedAsProgram, "r");
@@ -26,8 +34,6 @@ int preAssembler() {
     //Reading the file line by line
     while(fgets(line, MAX_CHAR, postMacro) != NULL) {
         //printf("%s", line); //Printing the .as file
-
-
         /*
          * WE WILL DO LABELS LATER
          *
@@ -77,6 +83,20 @@ int preAssembler() {
                     // Insert the array pos of comparisonArray with the value of actionBit
                     instruction_word[opcodePosition + count2] = actions_bit[count1][count2];
                 }
+
+                /*
+                 * MI'UN MIYADI
+                 * We will detect the original operand sorting method
+                 * this function will be called after the pointer will reach the 5th position(should be adjusted later)
+                 * This code translates the number detected to binary
+                 * example: mov 1, @r2 => will output: 000000000100
+                 */
+                //printf("Origin operand number: %s\n", readNumbersInstruction(line));
+
+                //Prints binary version of a number given
+                print10BitBinary(originOperand);
+                free(originOperand);
+
                 // Print the result
                 printf("instruction_word: %s\n", instruction_word);
             }

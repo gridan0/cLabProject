@@ -79,6 +79,24 @@ build CMakeFiles/AssemblerProject.dir/Assembler.c.obj: C_COMPILER__AssemblerProj
   OBJECT_DIR = CMakeFiles\AssemblerProject.dir
   OBJECT_FILE_DIR = CMakeFiles\AssemblerProject.dir
 
+build CMakeFiles/AssemblerProject.dir/memory.c.obj: C_COMPILER__AssemblerProject_Debug C$:/Users/betsa/Desktop/AssemblerProject/memory.c || cmake_object_order_depends_target_AssemblerProject
+  DEP_FILE = CMakeFiles\AssemblerProject.dir\memory.c.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu90
+  OBJECT_DIR = CMakeFiles\AssemblerProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\AssemblerProject.dir
+
+build CMakeFiles/AssemblerProject.dir/binaryUtil.c.obj: C_COMPILER__AssemblerProject_Debug C$:/Users/betsa/Desktop/AssemblerProject/binaryUtil.c || cmake_object_order_depends_target_AssemblerProject
+  DEP_FILE = CMakeFiles\AssemblerProject.dir\binaryUtil.c.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu90
+  OBJECT_DIR = CMakeFiles\AssemblerProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\AssemblerProject.dir
+
+build CMakeFiles/AssemblerProject.dir/firstOperand.c.obj: C_COMPILER__AssemblerProject_Debug C$:/Users/betsa/Desktop/AssemblerProject/firstOperand.c || cmake_object_order_depends_target_AssemblerProject
+  DEP_FILE = CMakeFiles\AssemblerProject.dir\firstOperand.c.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu90
+  OBJECT_DIR = CMakeFiles\AssemblerProject.dir
+  OBJECT_FILE_DIR = CMakeFiles\AssemblerProject.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target AssemblerProject
@@ -87,7 +105,7 @@ build CMakeFiles/AssemblerProject.dir/Assembler.c.obj: C_COMPILER__AssemblerProj
 #############################################
 # Link the executable AssemblerProject.exe
 
-build AssemblerProject.exe: C_EXECUTABLE_LINKER__AssemblerProject_Debug CMakeFiles/AssemblerProject.dir/main.c.obj CMakeFiles/AssemblerProject.dir/preAssembler.c.obj CMakeFiles/AssemblerProject.dir/macroRead.c.obj CMakeFiles/AssemblerProject.dir/actions.c.obj CMakeFiles/AssemblerProject.dir/Assembler.c.obj
+build AssemblerProject.exe: C_EXECUTABLE_LINKER__AssemblerProject_Debug CMakeFiles/AssemblerProject.dir/main.c.obj CMakeFiles/AssemblerProject.dir/preAssembler.c.obj CMakeFiles/AssemblerProject.dir/macroRead.c.obj CMakeFiles/AssemblerProject.dir/actions.c.obj CMakeFiles/AssemblerProject.dir/Assembler.c.obj CMakeFiles/AssemblerProject.dir/memory.c.obj CMakeFiles/AssemblerProject.dir/binaryUtil.c.obj CMakeFiles/AssemblerProject.dir/firstOperand.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\AssemblerProject.dir

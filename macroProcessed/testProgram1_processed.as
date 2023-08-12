@@ -1,3 +1,3 @@
-mov 1, @r0
-mov 3, @r1
-sub @r1, @r0
+mov 14, @r0
+sub 21, @r3
+cmp 54, @r5
