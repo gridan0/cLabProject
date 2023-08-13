@@ -12,10 +12,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void print10BitBinary(const char* numberStr) {
+void calc10bitnum(const char* numberStr) {
     int number = atoi(numberStr); /* Convert the number string to an integer */
     unsigned int mask = 1 << 9;
 
+    //print result
     printf("10-bit form of %d: ", number);
 
     int i;
