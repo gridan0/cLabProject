@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "binaryUtil.h"
+#include "firstOperand.h"
 
 #define MAX_CHAR 80
 #define NUMBER_OF_ACTIONS 16
@@ -12,6 +14,17 @@ int preAssembler() {
     char processedAsProgram[] = "macroProcessed/testProgram1_processed.as";
     char line[MAX_CHAR];
     int linesCount = 0;
+    char* originOperand = readNumbersInstruction(line);
+
+    //Miun types
+    char miun1[] = "001";
+    char miun3[] = "011";
+    char miun5[] = "101";
+
+    /*
+     * Legal operands, two stages
+     */
+
 
     //Reading the post macro processing file
     postMacro = fopen(processedAsProgram, "r");
@@ -26,8 +39,6 @@ int preAssembler() {
     //Reading the file line by line
     while(fgets(line, MAX_CHAR, postMacro) != NULL) {
         //printf("%s", line); //Printing the .as file
-
-
         /*
          * WE WILL DO LABELS LATER
          *
@@ -70,15 +81,36 @@ int preAssembler() {
                 instruction_word[12] = '\0';
 
                 //Position of the opcode in the instruction word
-                int opcodePosition = 4;
+                int opcodePosition = 3;
                 int count2;
                 // Copy the values from comparisonArray into instruction_word at the desired position
                 for (count2 = 0; count2 < strlen(actions_bit[count1]); count2++) {
                     // Insert the array pos of comparisonArray with the value of actionBit
                     instruction_word[opcodePosition + count2] = actions_bit[count1][count2];
                 }
-                // Print the result
-                printf("instruction_word: %s\n", instruction_word);
+
+                /*
+                 * MI'UN MIYADI
+                 * We will detect the original operand sorting method
+                 * this function will be called after the pointer will reach the 5th position
+                 */
+                //printf("Origin op number: %s\n", readNumbersInstruction(line));
+
+                //Printing in a binary form out origin operand
+
+                //Checking to see if the origin operand is a number
+                if(readNumbersInstruction(line) != NULL) {
+                    //Here we have detected a number. That means we have MI'UN MIYADI at the origin operand
+                    //The code for it is 1, or 001 in the instruction word
+                    int originOperandMiunPos = 0;
+                    //Pasting the miun code into the instruction word
+                    strncpy(instruction_word + originOperandMiunPos, miun1, 3);
+
+
+
+                    calc10bitnum(readNumbersInstruction(line));
+                    printf("instruction_word: %s\n", instruction_word);
+                }
             }
         }
         linesCount++; // Increment the line count
