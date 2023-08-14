@@ -1,5 +1,8 @@
+//
+// Created by betsa on 13/08/2023.
+//
 
-#include "firstOperand.h"
+#include "secondOperand.h"
 #include <stdio.h>
 #include <ctype.h>
 #include <stdlib.h>
@@ -7,10 +10,10 @@
 #define MAX_CHAR 80
 
 /* Detecting numbers on the 4th position (would need to account for the stop action) */
-#define NUMBER_TO_DETECT_POS 4
+#define NUMBER_TO_DETECT_POS 7
 
-char* readNumbersInstruction(const char line[MAX_CHAR]) {
-    int startPos = NUMBER_TO_DETECT_POS; /* Starting from position 5 */
+char* readNumbersInstructionOP2(const char line[MAX_CHAR]) {
+    int startPos = NUMBER_TO_DETECT_POS; /* Starting from position 7 */
     int i = startPos;
     int j = 0;
     char* number = (char*)malloc(MAX_CHAR * sizeof(char));
