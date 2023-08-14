@@ -90,7 +90,7 @@ int preAssembler() {
                 }
 
                 /*
-                 * MI'UN MIYADI ORIGIN
+                 * MI'UN MIYADI
                  * We will detect the original operand sorting method
                  * this function will be called after the pointer will reach the 5th position
                  */
@@ -103,8 +103,10 @@ int preAssembler() {
                     //Here we have detected a number. That means we have MI'UN MIYADI at the origin operand
                     //The code for it is 1, or 001 in the instruction word
                     int originOperandMiunPos = 0;
-                    //Pasting the MIUN1 code into the instruction word
+                    //Pasting the miun code into the instruction word
                     strncpy(instruction_word + originOperandMiunPos, miun1, 3);
+
+
 
                     calc10bitnum(readNumbersInstruction(line));
                     printf("instruction_word: %s\n", instruction_word);

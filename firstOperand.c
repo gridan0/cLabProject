@@ -1,3 +1,6 @@
+//
+// Created by betsa on 12/08/2023.
+//
 
 #include "firstOperand.h"
 #include <stdio.h>
