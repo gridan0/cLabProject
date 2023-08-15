@@ -6,6 +6,6 @@
 #define ASSEMBLERPROJECT_SECONDOPERAND_H
 #define MAX_CHAR 80
 
-char* readNumbersInstructionOP2(const char line[MAX_CHAR]);
+char* readNumbersInstructionOP2(const char line[MAX_CHAR], int* registerFlag);
 
 #endif //ASSEMBLERPROJECT_SECONDOPERAND_H

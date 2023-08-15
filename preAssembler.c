@@ -5,6 +5,7 @@
 #include <string.h>
 #include "binaryUtil.h"
 #include "firstOperand.h"
+#include "secondOperand.h"
 
 #define MAX_CHAR 80
 #define NUMBER_OF_ACTIONS 16
@@ -148,6 +149,64 @@ int preAssembler() {
                         printf("1st info word:  %s \n", firstInfoWord);
                     }
                 }
+
+                //Checking MIUN DESTINATION
+                //Checking to see if the origin operand is a number
+                if(readNumbersInstructionOP2(line, &registerFlag) != NULL) {
+                    //Here we have detected that there's content in the operand.
+                    //IF it's a number, it's MIUN1(mi'un miyadi)
+                    //IF it's a register, it's MIUN5(mi'un oger)
+                    int originOperandMiunPos = 7;
+                    if(registerFlag == 0) {
+                        //MIUN MIYADI
+                        //Pasting the miun code into the instruction word
+                        strncpy(instruction_word + originOperandMiunPos, miun1, 3);
+                        calc10bitnum(readNumbersInstructionOP1(line, &registerFlag));
+                        printf("instruction_word: %s\n", instruction_word);
+
+                        /*
+                         * INFORMATION WORD needs to be added to the output
+                         * it will contain the number itself
+                         */
+                        // Initialize firstInfoWord with zeros, and null terminate
+                        char firstInfoWord[13];
+                        memset(firstInfoWord, '0', sizeof(firstInfoWord) - 1);
+                        firstInfoWord[12] = '\0';
+
+                        // Calculate the 10-bit binary number using calc10bitnum
+                        char* firstInfoWordValue = calc10bitnum(readNumbersInstructionOP1(line, &registerFlag));
+
+                        // Copy the 10-bit binary number into firstInfoWord, starting at position 0, leaving the two rightmost digits as zeros
+                        strncpy(firstInfoWord, firstInfoWordValue, 10);
+                        // Free the dynamically allocated memory for firstInfoWordValue
+                        free(firstInfoWordValue);
+                        // Print the result
+                        printf("1st info word:  %s \n", firstInfoWord);
+
+                    } else if(registerFlag == 1) {
+                        //MIUN OGER (MIUN 5)
+                        strncpy(instruction_word + originOperandMiunPos, miun5, 3);
+                        printf("instruction_word: %s\n", instruction_word);
+
+                        //Additional information word, IF REGISTER IS DETECTED,
+                        // Initialize firstInfoWord with zeros, and null terminate
+                        char firstInfoWord[13];
+                        memset(firstInfoWord, '0', sizeof(firstInfoWord) - 1);
+                        firstInfoWord[12] = '\0';
+
+                        int instOriginRegPos = 0;
+                        // Calculate the 5-bit binary number using calc10bitnum
+                        char* firstInfoWordValue = calc5bitnum(readNumbersInstructionOP1(line, &registerFlag));
+
+                        // Copy the 10-bit binary number into firstInfoWord, starting at position 0, leaving the two rightmost digits as zeros
+                        strncpy(firstInfoWord + instOriginRegPos, firstInfoWordValue, 5);
+                        // Free the dynamically allocated memory for firstInfoWordValue
+                        free(firstInfoWordValue);
+                        // Print the result
+                        printf("1st info word:  %s \n", firstInfoWord);
+                    }
+                }
+
             }
         }
         linesCount++; // Increment the line count
