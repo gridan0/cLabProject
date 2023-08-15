@@ -1,7 +1,3 @@
-//
-// Created by betsa on 12/08/2023.
-//
-
 #include "firstOperand.h"
 #include <stdio.h>
 #include <ctype.h>
@@ -9,32 +5,47 @@
 
 #define MAX_CHAR 80
 
-/* Detecting numbers on the 4th position (would need to account for the stop action) */
 #define NUMBER_TO_DETECT_POS 4
 
-char* readNumbersInstruction(const char line[MAX_CHAR]) {
-    int startPos = NUMBER_TO_DETECT_POS; /* Starting from position 5 */
+char* readNumbersInstruction(const char line[MAX_CHAR], int* registerFlag) {
+    int startPos = NUMBER_TO_DETECT_POS;
     int i = startPos;
     int j = 0;
-    char* number = (char*)malloc(MAX_CHAR * sizeof(char));
+    char* operandContent = (char*)malloc(MAX_CHAR * sizeof(char));
+    *registerFlag = 0; // Reset the flag to 0
 
-    /* Initialize the number to empty string */
-    number[0] = '\0';
+    /* Initialize the operandContent to empty string */
+    operandContent[0] = '\0';
 
-    /* Looking for a number */
     while (line[i] != ',' && line[i] != '\0') {
+
+
+
         if (isdigit((unsigned char)line[i])) {
-            /* Collecting digits into a number string */
+            /* Collecting digits into a operandContent string */
             while (isdigit((unsigned char)line[i]) && line[i] != ',' && line[i] != '\0') {
-                number[j++] = line[i++];
+                operandContent[j++] = line[i++];
             }
-            number[j] = '\0'; /* Null terminate the number string */
-            return number;
+            operandContent[j] = '\0'; /* Null terminate the operandContent string */
+            return operandContent;
+            /*
+             * DETECTING REGISTER AND IT'S NUMBER
+             */
+        } else if (line[i] == '@' && line[i + 1] == 'r' && isdigit(line[i + 2]) && line[i + 2] >= '0' && line[i + 2] <= '7') {
+            /* Collecting the character after @r */
+
+            //If register is detected, flag will turn into 1.
+            *registerFlag = 1;
+
+            operandContent[j++] = line[i + 2];
+            operandContent[j] = '\0'; /* Null terminate the operandContent string */
+            printf("Register detected \n");
+
+            return operandContent;
         }
         i++;
     }
 
-    printf("No number detected.\n");
-    free(number);
+    free(operandContent);
     return NULL;
 }

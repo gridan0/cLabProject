@@ -12,22 +12,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void calc10bitnum(const char* numberStr) {
-    int number = atoi(numberStr); /* Convert the number string to an integer */
+char* calc10bitnum(const char* numberStr) {
+    int number = atoi(numberStr);
     unsigned int mask = 1 << 9;
-
-    //print result
-    printf("10-bit form of %d: ", number);
+    char* binaryStr = (char*)malloc(11 * sizeof(char)); // 10 bits + null terminator
 
     int i;
     for(i = 0; i < 10; i++) {
         if (number & mask) {
-            printf("1");
+            binaryStr[i] = '1';
         } else {
-            printf("0");
+            binaryStr[i] = '0';
         }
         mask >>= 1;
     }
-    printf("\n");
+    binaryStr[10] = '\0'; // Null-terminate the string
+
+    return binaryStr;
 }
 

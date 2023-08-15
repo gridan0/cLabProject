@@ -14,7 +14,9 @@ int preAssembler() {
     char processedAsProgram[] = "macroProcessed/testProgram1_processed.as";
     char line[MAX_CHAR];
     int linesCount = 0;
-    char* originOperand = readNumbersInstruction(line);
+    int registerFlag = 0;
+    char* originOperand = readNumbersInstruction(line,&registerFlag);
+
 
     //Miun types
     char miun1[] = "001";
@@ -33,8 +35,6 @@ int preAssembler() {
         printf("Could not open macro processed program in AsInput %s\n", processedAsProgram);
         return 1;
     }
-
-    printf("Reading in preAssembler: \n");
 
     //Reading the file line by line
     while(fgets(line, MAX_CHAR, postMacro) != NULL) {
@@ -90,26 +90,46 @@ int preAssembler() {
                 }
 
                 /*
-                 * MI'UN MIYADI
-                 * We will detect the original operand sorting method
-                 * this function will be called after the pointer will reach the 5th position
+                 * Checking MIUN ORIGIN OPERAND
                  */
-                //printf("Origin op number: %s\n", readNumbersInstruction(line));
-
-                //Printing in a binary form out origin operand
 
                 //Checking to see if the origin operand is a number
-                if(readNumbersInstruction(line) != NULL) {
-                    //Here we have detected a number. That means we have MI'UN MIYADI at the origin operand
-                    //The code for it is 1, or 001 in the instruction word
+                if(readNumbersInstruction(line,&registerFlag) != NULL) {
+                    //Here we have detected that there's content in the operand.
+                    //IF it's a number, it's MIUN1(mi'un miyadi)
+                    //IF it's a register, it's MIUN5(mi'un oger)
                     int originOperandMiunPos = 0;
-                    //Pasting the miun code into the instruction word
-                    strncpy(instruction_word + originOperandMiunPos, miun1, 3);
+                    if(registerFlag == 0) {
+                        //MIUN MIYADI
+                        //Pasting the miun code into the instruction word
+                        strncpy(instruction_word + originOperandMiunPos, miun1, 3);
+                        calc10bitnum(readNumbersInstruction(line,&registerFlag));
+                        printf("instruction_word: %s\n", instruction_word);
 
+                        /*
+                         * INFORMATION WORD needs to be added to the output
+                         * it will contain the number itself
+                         */
+                        // Initialize firstInfoWord with zeros, and null terminate
+                        char firstInfoWord[13];
+                        memset(firstInfoWord, '0', sizeof(firstInfoWord) - 1);
+                        firstInfoWord[12] = '\0';
 
+                        // Calculate the 10-bit binary number using calc10bitnum
+                        char* firstInfoWordValue = calc10bitnum(readNumbersInstruction(line, &registerFlag));
 
-                    calc10bitnum(readNumbersInstruction(line));
-                    printf("instruction_word: %s\n", instruction_word);
+                        // Copy the 10-bit binary number into firstInfoWord, starting at position 0, leaving the two rightmost digits as zeros
+                        strncpy(firstInfoWord, firstInfoWordValue, 10);
+                        // Free the dynamically allocated memory for firstInfoWordValue
+                        free(firstInfoWordValue);
+                        // Print the result
+                        printf("1st info word:  %s \n", firstInfoWord);
+
+                    } else if(registerFlag == 1) {
+                        //MIUN OGER (MIUN 5)
+                        strncpy(instruction_word + originOperandMiunPos, miun5, 3);
+                        printf("instruction_word: %s\n", instruction_word);
+                    }
                 }
             }
         }

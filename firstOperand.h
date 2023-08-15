@@ -6,6 +6,6 @@
 #define ASSEMBLERPROJECT_FIRSTOPERAND_H
 #define MAX_CHAR 80
 
-char* readNumbersInstruction(const char line[MAX_CHAR]);
+char* readNumbersInstruction(const char line[MAX_CHAR],int* registerFlag);
 
 #endif //ASSEMBLERPROJECT_FIRSTOPERAND_H

@@ -57,7 +57,7 @@ const char *actions_no_operands[] = {
 //This will be the opcode in the machine
 const char *actions_bit[] = {
         "0000",
-        "0002",
+        "0001",
         "0010",
         "0011",
         "0100",
