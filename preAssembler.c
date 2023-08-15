@@ -15,7 +15,7 @@ int preAssembler() {
     char line[MAX_CHAR];
     int linesCount = 0;
     int registerFlag = 0;
-    char* originOperand = readNumbersInstruction(line,&registerFlag);
+    char* originOperand = readNumbersInstructionOP1(line, &registerFlag);
 
 
     //Miun types
@@ -63,13 +63,13 @@ int preAssembler() {
         }
 
         //Comparing the array that we have created to the action table, and seeing what fits
-        int count1;
-        for (count1 = 0; count1 < NUMBER_OF_ACTIONS; count1++) {
-            if (strcmp(comparisonArray, actions[count1]) == 0) {
+        int actionArrayCount;
+        for (actionArrayCount = 0; actionArrayCount < NUMBER_OF_ACTIONS; actionArrayCount++) {
+            if (strcmp(comparisonArray, actions[actionArrayCount]) == 0) {
                 //If the action from the .as file matches the action we detected
 
                 //We should get the bit value of comparisonArray
-                printf("The machine code for %s, is %s \n ", comparisonArray, actions_bit[count1]);
+                printf("The machine code for %s, is %s \n ", comparisonArray, actions_bit[actionArrayCount]);
 
                 //Let's print the instruction word, only with the opcode, without the operands
 
@@ -84,9 +84,9 @@ int preAssembler() {
                 int opcodePosition = 3;
                 int count2;
                 // Copy the values from comparisonArray into instruction_word at the desired position
-                for (count2 = 0; count2 < strlen(actions_bit[count1]); count2++) {
+                for (count2 = 0; count2 < strlen(actions_bit[actionArrayCount]); count2++) {
                     // Insert the array pos of comparisonArray with the value of actionBit
-                    instruction_word[opcodePosition + count2] = actions_bit[count1][count2];
+                    instruction_word[opcodePosition + count2] = actions_bit[actionArrayCount][count2];
                 }
 
                 /*
@@ -94,7 +94,7 @@ int preAssembler() {
                  */
 
                 //Checking to see if the origin operand is a number
-                if(readNumbersInstruction(line,&registerFlag) != NULL) {
+                if(readNumbersInstructionOP1(line, &registerFlag) != NULL) {
                     //Here we have detected that there's content in the operand.
                     //IF it's a number, it's MIUN1(mi'un miyadi)
                     //IF it's a register, it's MIUN5(mi'un oger)
@@ -103,7 +103,7 @@ int preAssembler() {
                         //MIUN MIYADI
                         //Pasting the miun code into the instruction word
                         strncpy(instruction_word + originOperandMiunPos, miun1, 3);
-                        calc10bitnum(readNumbersInstruction(line,&registerFlag));
+                        calc10bitnum(readNumbersInstructionOP1(line, &registerFlag));
                         printf("instruction_word: %s\n", instruction_word);
 
                         /*
@@ -116,7 +116,7 @@ int preAssembler() {
                         firstInfoWord[12] = '\0';
 
                         // Calculate the 10-bit binary number using calc10bitnum
-                        char* firstInfoWordValue = calc10bitnum(readNumbersInstruction(line, &registerFlag));
+                        char* firstInfoWordValue = calc10bitnum(readNumbersInstructionOP1(line, &registerFlag));
 
                         // Copy the 10-bit binary number into firstInfoWord, starting at position 0, leaving the two rightmost digits as zeros
                         strncpy(firstInfoWord, firstInfoWordValue, 10);
@@ -129,6 +129,23 @@ int preAssembler() {
                         //MIUN OGER (MIUN 5)
                         strncpy(instruction_word + originOperandMiunPos, miun5, 3);
                         printf("instruction_word: %s\n", instruction_word);
+
+                        //Additional information word, IF REGISTER IS DETECTED,
+                        // Initialize firstInfoWord with zeros, and null terminate
+                        char firstInfoWord[13];
+                        memset(firstInfoWord, '0', sizeof(firstInfoWord) - 1);
+                        firstInfoWord[12] = '\0';
+
+                        int instOriginRegPos = 0;
+                        // Calculate the 5-bit binary number using calc10bitnum
+                        char* firstInfoWordValue = calc5bitnum(readNumbersInstructionOP1(line, &registerFlag));
+
+                        // Copy the 10-bit binary number into firstInfoWord, starting at position 0, leaving the two rightmost digits as zeros
+                        strncpy(firstInfoWord + instOriginRegPos, firstInfoWordValue, 5);
+                        // Free the dynamically allocated memory for firstInfoWordValue
+                        free(firstInfoWordValue);
+                        // Print the result
+                        printf("1st info word:  %s \n", firstInfoWord);
                     }
                 }
             }

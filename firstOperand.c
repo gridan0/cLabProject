@@ -7,7 +7,7 @@
 
 #define NUMBER_TO_DETECT_POS 4
 
-char* readNumbersInstruction(const char line[MAX_CHAR], int* registerFlag) {
+char* readNumbersInstructionOP1(const char line[MAX_CHAR], int* registerFlag) {
     int startPos = NUMBER_TO_DETECT_POS;
     int i = startPos;
     int j = 0;
@@ -18,9 +18,6 @@ char* readNumbersInstruction(const char line[MAX_CHAR], int* registerFlag) {
     operandContent[0] = '\0';
 
     while (line[i] != ',' && line[i] != '\0') {
-
-
-
         if (isdigit((unsigned char)line[i])) {
             /* Collecting digits into a operandContent string */
             while (isdigit((unsigned char)line[i]) && line[i] != ',' && line[i] != '\0') {

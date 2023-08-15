@@ -6,6 +6,7 @@
 #define ASSEMBLERPROJECT_BINARYUTIL_H
 
 char* calc10bitnum(const char* numberStr);
+char* calc5bitnum(const char* numberStr);
 
 
 #endif //ASSEMBLERPROJECT_BINARYUTIL_H
